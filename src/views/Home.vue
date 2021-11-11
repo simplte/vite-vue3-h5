@@ -121,12 +121,12 @@ const getVideoList = () => {
 </template>
 <style lang="scss">
 .title {
-  text-align: center;
-  line-height: 50px;
-  font-size: 12px;
-  width: 200px;
   position: relative;
+  width: 200px;
   height: 100px;
+  font-size: 12px;
+  line-height: 50px;
+  text-align: center;
 }
 
 .swiper-slide {
@@ -135,75 +135,89 @@ const getVideoList = () => {
     height: 100px;
   }
 }
+
 .moiveList {
-  margin-top: 15px;
   padding: 0 20px;
+  margin-top: 15px;
 
   .moiveTab {
+    display: flex;
     width: 335px;
     height: 105px;
-    border: 1px solid #f3f3f3;
-    display: flex;
     margin-top: 5px;
+    border: 1px solid #f3f3f3;
+
     &.firstTba {
       margin-top: 0;
     }
+
     .coverImg {
       width: 160px;
       overflow: hidden;
       // max-width: 160px;
       // height: 105px;
     }
+
     .introsBox {
-      padding: 13px 15px 14px 14px;
+      box-sizing: border-box;
       width: 100%;
       height: 100%;
-      box-sizing: border-box;
+      padding: 13px 15px 14px 14px;
+
       .contrlbox {
         display: flex;
         align-items: center;
       }
+
       .moiveDate {
-        color: #999999;
+        margin-bottom: 6px;
         font-size: 10px;
-        margin-bottom: 6px;
+        color: #999;
       }
+
       .moiveIntros {
-        color: #000000;
-        font-size: 13px;
-        height: 36px;
         min-width: 141px;
+        height: 36px;
         margin-bottom: 6px;
-        font-weight: bold;
         overflow-y: hidden;
+        font-size: 13px;
+        font-weight: bold;
+        color: #000;
       }
+
       .bannelBox {
         display: flex;
         justify-content: flex-end;
+
         .bannel {
-          width: 120px;
           display: flex;
+          width: 120px;
+
           .contrlbox {
+            justify-content: flex-start;
             width: 60px;
             text-align: left;
-            justify-content: flex-start;
+
             .zan {
               width: 16px;
               height: 16px;
               margin-left: 7px;
             }
+
             .look {
               width: 16px;
               height: 16px;
             }
+
             .count {
-              font-size: 10px;
-              color: #999;
-              line-height: 12px;
-              margin-left: 4px;
               margin-top: 2px;
+              margin-left: 4px;
+              font-size: 10px;
+              line-height: 12px;
+              color: #999;
             }
           }
+
           &.isJqr {
             width: 50px;
           }
