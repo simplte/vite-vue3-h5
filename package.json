@@ -2,7 +2,7 @@
   "name": "vue-project",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --mode development",
     "build": "vue-tsc --noEmit && vite build",
     "preserve": "vite build",
     "serve": "vite preview --port 5050",
@@ -25,6 +25,7 @@
   "devDependencies": {
     "@commitlint/cli": "^14.1.0",
     "@commitlint/config-conventional": "^14.1.0",
+    "@types/node": "^16.11.7",
     "@typescript-eslint/eslint-plugin": "^4.30.0",
     "@typescript-eslint/parser": "^4.30.0",
     "@vitejs/plugin-vue": "^1.9.3",

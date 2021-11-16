@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { getList } from '@/api/watch/index';
+
 interface VideoInfo {
   vid: string;
   cover: string;
@@ -25,7 +27,6 @@ import { ref } from '@vue/reactivity';
 import Swiper, { Autoplay, EffectCoverflow, EffectCube, Navigation, Pagination } from 'swiper';
 import { onMounted } from 'vue';
 
-import videoListRes from './videoList.json';
 Swiper.use([Autoplay, EffectCoverflow, EffectCube, Pagination, Navigation]);
 
 // swiper-bundle.min.css 决定了小圆点和左右翻页标签，如果不需要可以不引用
@@ -35,6 +36,8 @@ import 'swiper/swiper.scss';
 
 let allReadCount = ref<number>(0);
 let readBuyList = ref<VideoInfo[]>([]);
+let currentPage = ref<number>(1);
+
 onMounted(() => {
   new Swiper('.swiper1', {
     pagination: {
@@ -56,14 +59,15 @@ onMounted(() => {
       },
     },
   });
-  getVideoList();
+  getInfo();
 });
 
-const getVideoList = () => {
-  if (videoListRes && videoListRes.result == '0' && videoListRes.list.length > 0) {
+const getInfo = async () => {
+  const res = await getList({ page: currentPage.value });
+  if (res && res.result == '0' && res.list.length > 0) {
     // 总阅读量
-    allReadCount.value = Number(videoListRes.video_total || 0);
-    readBuyList.value = videoListRes.list;
+    allReadCount.value = Number(res.video_total || 0);
+    readBuyList.value = res.list;
     console.log(readBuyList);
   }
 };

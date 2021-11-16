@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { AxiosError, AxiosRequestConfig, AxiosResponse, AxiosRequestHeaders } from 'axios';
 
 export interface HttpRequestOptions extends AxiosRequestConfig {
   // 拦截处理
@@ -20,6 +20,7 @@ export interface HttpRequestOptions extends AxiosRequestConfig {
   errorMessageType?: 'warning' | 'error';
   // 错误信息显示时间
   errorMessageTimeout?: number;
+  headers?: AxiosRequestHeaders;
 }
 
 export interface HttpError extends AxiosError {
