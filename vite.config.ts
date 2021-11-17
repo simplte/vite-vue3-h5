@@ -8,20 +8,27 @@ import { createProxy } from './build/vite/proxy';
 // https://vitejs.dev/config/
 
 export default defineConfig(({ command, mode }) => {
+  console.log(command);
+  console.log(mode);
   const root = process.cwd();
   const env = loadEnv(mode, root);
   const viteEnv = wrapperEnv(env);
   const { VITE_PORT: port = 3000, VITE_PUBLIC_PATH: base = './', VITE_PROXY } = viteEnv;
-
+  console.log(new URL('./src/', import.meta.url));
   const proxy = createProxy(VITE_PROXY);
   return {
     plugins: [vue(), vueJsx()],
     resolve: {
       alias: {
-        '@/': new URL('./src/', import.meta.url).pathname,
-        '@@/': new URL('./src/assets/images/', import.meta.url).pathname,
+        '@': resolve(__dirname, 'src'),
+        '@@': resolve(__dirname, 'src/assets/images'),
       },
     },
+    // 定义全局常量替换方式
+    define: {
+      'process.env.APP_IS_LOCAL': '"true"',
+    },
+    // 开发或生产环境服务的公共基础路径
     base,
     server: {
       host: true,

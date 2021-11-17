@@ -6,3 +6,4 @@ bash
 /package.json
 /package-lock.json
 **/*.d.ts
+/src/assets/js/

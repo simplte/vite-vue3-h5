@@ -37,7 +37,7 @@ import 'swiper/swiper.scss';
 let allReadCount = ref<number>(0);
 let readBuyList = ref<VideoInfo[]>([]);
 let currentPage = ref<number>(1);
-
+console.log(process.env.APP_IS_LOCAL);
 onMounted(() => {
   new Swiper('.swiper1', {
     pagination: {

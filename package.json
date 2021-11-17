@@ -3,9 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite --mode development",
-    "build": "vue-tsc --noEmit && vite build",
+    "serve": "vite --mode development",
+    "build": "vue-tsc --noEmit && vite build --mode production",
+    "build:test": "vite build --mode test",
     "preserve": "vite build",
-    "serve": "vite preview --port 5050",
+    "preview": "vite preview --port 5050",
     "typecheck": "vue-tsc --noEmit",
     "prepare": "husky install",
     "lint": "eslint --cache --max-warnings 0  \"{src,mock}/**/*.{vue,ts,tsx}\" --fix",
