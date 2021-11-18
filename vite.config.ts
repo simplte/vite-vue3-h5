@@ -27,6 +27,7 @@ export default defineConfig(({ command, mode }) => {
     // 定义全局常量替换方式
     define: {
       'process.env.APP_IS_LOCAL': '"true"',
+      qcccc: 'true',
     },
     // 开发或生产环境服务的公共基础路径
     base,

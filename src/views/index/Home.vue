@@ -1,90 +1,15 @@
-<script setup lang="ts">
-import { getList } from '@/api/watch/index';
-
-interface VideoInfo {
-  vid: string;
-  cover: string;
-  video: string;
-  title: string;
-  share_img: string;
-  create_time: string;
-  status: string;
-  video_img: string;
-  video_jump: string;
-  subtitle: string;
-  recommend_title: string;
-  sort: string;
-  share_title: string;
-  share_friend_img: string;
-  type: string;
-  content: string;
-  moreList: any;
-  video_wnum: string;
-  video_lnum: string;
-}
-
-import { ref } from '@vue/reactivity';
-import Swiper, { Autoplay, EffectCoverflow, EffectCube, Navigation, Pagination } from 'swiper';
-import { onMounted } from 'vue';
-
-Swiper.use([Autoplay, EffectCoverflow, EffectCube, Pagination, Navigation]);
-
-// swiper-bundle.min.css 决定了小圆点和左右翻页标签，如果不需要可以不引用
-import 'swiper/swiper-bundle.min.css';
-// swiper.less/sass/css 决定了基础的样式
-import 'swiper/swiper.scss';
-
-let allReadCount = ref<number>(0);
-let readBuyList = ref<VideoInfo[]>([]);
-let currentPage = ref<number>(1);
-console.log(process.env.APP_IS_LOCAL);
-onMounted(() => {
-  new Swiper('.swiper1', {
-    pagination: {
-      el: '.swiper-pagination',
-    },
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-      hideOnClick: true,
-    },
-    autoplay: {
-      delay: 3000,
-      stopOnLastSlide: false,
-      disableOnInteraction: false,
-    },
-    on: {
-      navigationShow: function () {
-        console.log('按钮显示了');
-      },
-    },
-  });
-  getInfo();
-});
-
-const getInfo = async () => {
-  const res = await getList({ page: currentPage.value });
-  if (res && res.result == '0' && res.list.length > 0) {
-    // 总阅读量
-    allReadCount.value = Number(res.video_total || 0);
-    readBuyList.value = res.list;
-    console.log(readBuyList);
-  }
-};
-</script>
-
 <template>
   <div class="home">
     <div class="swiper-container swiper1">
       <div class="swiper-wrapper">
         <div class="swiper-slide">
-          <img src="../assets/logo.svg" alt="" />
+          <img src="@/assets/logo.svg" alt="" />
         </div>
         <div class="swiper-slide">
-          <img src="../assets/logo.svg" alt="" />
+          <img src="@/assets/logo.svg" alt="" />
         </div>
         <div class="swiper-slide">
-          <img src="../assets/logo.svg" alt="" />
+          <img src="@/assets/logo.svg" alt="" />
         </div>
       </div>
       <!-- 如果需要分页器 -->
@@ -122,7 +47,78 @@ const getInfo = async () => {
       </div>
     </div>
   </div>
+  <HelloWorld ref="hwEL" msg="123123" @clickFun="onHw"></HelloWorld>
+  <div @click="tapHwExposeFn">触发helloword中外抛的方法</div>
 </template>
+<script setup lang="ts">
+// swiper-bundle.min.css 决定了小圆点和左右翻页标签，如果不需要可以不引用
+import 'swiper/swiper-bundle.min.css';
+// swiper.less/sass/css 决定了基础的样式
+import 'swiper/swiper.scss';
+
+import Swiper, { Autoplay, EffectCoverflow, EffectCube, Navigation, Pagination } from 'swiper';
+import { ref } from 'vue';
+import { onMounted } from 'vue';
+
+import { getList } from '@/api/watch/index';
+import HelloWorld from '@/components/HelloWorld.vue';
+
+import { VideoInfo } from './types/index';
+Swiper.use([Autoplay, EffectCoverflow, EffectCube, Pagination, Navigation]);
+
+let allReadCount = ref<number>(0);
+let readBuyList = ref<VideoInfo[]>([]);
+let currentPage = ref<number>(1);
+
+// 1:读取vite define中定义的全局变量
+console.log(process.env.APP_IS_LOCAL);
+console.log(qcccc);
+
+onMounted(() => {
+  new Swiper('.swiper1', {
+    pagination: {
+      el: '.swiper-pagination',
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+      hideOnClick: true,
+    },
+    autoplay: {
+      delay: 3000,
+      stopOnLastSlide: false,
+      disableOnInteraction: false,
+    },
+    on: {
+      navigationShow: function () {
+        console.log('按钮显示了');
+      },
+    },
+  });
+
+  getInfo();
+});
+
+const getInfo = async () => {
+  const res = await getList({ page: currentPage.value });
+  if (res && res.result == '0' && res.list.length > 0) {
+    // 总阅读量
+    allReadCount.value = Number(res.video_total || 0);
+    readBuyList.value = res.list;
+    console.log(readBuyList);
+  }
+};
+// 2.emit
+const onHw = (e) => {
+  console.log(e);
+};
+// 3：触发子组件expose外抛得方法
+let hwEL = ref<Element>();
+const tapHwExposeFn = () => {
+  console.log(hwEL.value.exposeHwFn());
+};
+</script>
+
 <style lang="scss">
 .title {
   position: relative;

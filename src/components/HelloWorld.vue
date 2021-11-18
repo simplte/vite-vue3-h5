@@ -1,28 +1,22 @@
 <script setup lang="ts">
-defineProps<{
+import { ref } from '@vue/reactivity';
+
+const props = defineProps<{
   msg: String;
 }>();
+console.log(props);
+const emits = defineEmits(['clickFun']);
+const tapEmitFun = () => {
+  emits('clickFun', '我是hello组件');
+};
+const hwData = ref<string>('来自hellow中的数据：qccc');
+const exposeHwFn = () => {
+  return hwData.value;
+};
+defineExpose({ exposeHwFn });
 </script>
 
 <template>
-  <div class="greetings">
-    <h1 class="green">{{ msg }}</h1>
-    <h3>
-      You’ve successfully created a project with
-      <a target="_blank" href="https://vitejs.dev/">Vite</a>
-      +
-      <a target="_blank" href="https://v3.vuejs.org/">Vue 3</a>
-      . What's next?
-    </h3>
-  </div>
+  <div class="greetings" @click="tapEmitFun">{{ msg }}</div>
+  <div class="greetings">{{ hwData }}</div>
 </template>
-
-<style scoped lang="scss">
-.greetings {
-  width: 100%;
-
-  .green {
-    font-size: 10px;
-  }
-}
-</style>
