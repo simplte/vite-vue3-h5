@@ -2,6 +2,7 @@ import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import { resolve } from 'path';
 import { ConfigEnv, defineConfig, loadEnv } from 'vite';
+import { viteMockServe } from 'vite-plugin-mock';
 
 import { wrapperEnv } from './build/utils';
 import { createProxy } from './build/vite/proxy';
@@ -17,7 +18,7 @@ export default defineConfig(({ command, mode }) => {
   console.log(new URL('./src/', import.meta.url));
   const proxy = createProxy(VITE_PROXY);
   return {
-    plugins: [vue(), vueJsx()],
+    plugins: [vue(), vueJsx(), viteMockServe()],
     resolve: {
       alias: {
         '@': resolve(__dirname, 'src'),

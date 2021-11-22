@@ -49,6 +49,7 @@
   </div>
   <HelloWorld ref="hwEL" msg="123123" @clickFun="onHw"></HelloWorld>
   <div @click="tapHwExposeFn">触发helloword中外抛的方法</div>
+  <Welcome></Welcome>
 </template>
 <script setup lang="ts">
 // swiper-bundle.min.css 决定了小圆点和左右翻页标签，如果不需要可以不引用
@@ -60,8 +61,10 @@ import Swiper, { Autoplay, EffectCoverflow, EffectCube, Navigation, Pagination }
 import { ref } from 'vue';
 import { onMounted } from 'vue';
 
+import { getUserInfo } from '@/api/mock/index';
 import { getList } from '@/api/watch/index';
 import HelloWorld from '@/components/HelloWorld.vue';
+import Welcome from '@/components/Welcome.vue';
 
 import { VideoInfo } from './types/index';
 Swiper.use([Autoplay, EffectCoverflow, EffectCube, Pagination, Navigation]);
@@ -97,6 +100,7 @@ onMounted(() => {
   });
 
   getInfo();
+  getUserInfos();
 });
 
 const getInfo = async () => {
@@ -108,6 +112,7 @@ const getInfo = async () => {
     console.log(readBuyList);
   }
 };
+
 // 2.emit
 const onHw = (e) => {
   console.log(e);
@@ -116,6 +121,10 @@ const onHw = (e) => {
 let hwEL = ref<Element>();
 const tapHwExposeFn = () => {
   console.log(hwEL.value.exposeHwFn());
+};
+const getUserInfos = async () => {
+  const res = await getUserInfo();
+  console.log(res);
 };
 </script>
 
