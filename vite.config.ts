@@ -1,24 +1,20 @@
-import vue from '@vitejs/plugin-vue';
-import vueJsx from '@vitejs/plugin-vue-jsx';
 import { resolve } from 'path';
 import { ConfigEnv, defineConfig, loadEnv } from 'vite';
-import { viteMockServe } from 'vite-plugin-mock';
 
 import { wrapperEnv } from './build/utils';
+import { createVitePlugins } from './build/vite/plugins/index';
 import { createProxy } from './build/vite/proxy';
-// https://vitejs.dev/config/
 
+// https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
-  console.log(command);
-  console.log(mode);
   const root = process.cwd();
   const env = loadEnv(mode, root);
   const viteEnv = wrapperEnv(env);
+  const isBuild = command === 'build';
   const { VITE_PORT: port = 3000, VITE_PUBLIC_PATH: base = './', VITE_PROXY } = viteEnv;
-  console.log(new URL('./src/', import.meta.url));
   const proxy = createProxy(VITE_PROXY);
   return {
-    plugins: [vue(), vueJsx(), viteMockServe()],
+    plugins: createVitePlugins(viteEnv, isBuild),
     resolve: {
       alias: {
         '@': resolve(__dirname, 'src'),
