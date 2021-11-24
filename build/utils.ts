@@ -1,20 +1,25 @@
-export function wrapperEnv(envConf) {
-  const ret:any = {};
-  for(const envName of Object.keys(envConf)) {
+
+import { VITE_PORT, VITE_PROXY } from './constant';
+// 读取所有环境变量配置文件到 process.env
+export function wrapperEnv(envConf: Recordable): ViteEnv {
+  const ret: any = {};
+
+  for (const envName of Object.keys(envConf)) {
     let realName = envConf[envName].replace(/\\n/g, '\n');
     realName = ['true', 'false'].includes(realName) ? JSON.parse(realName) : realName;
-    if(envName == 'VITE_PORT') {
+    if (envName === VITE_PORT) {
       realName = Number(realName);
     }
-    if(envName == 'VITE_PROXY') {
+    if (envName === VITE_PROXY) {
       try {
-        realName = JSON.parse(realName)
+        realName = JSON.parse(realName);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     }
     ret[envName] = realName;
     process.env[envName] = realName;
   }
-  return ret
+  console.log(ret)
+  return ret;
 }
