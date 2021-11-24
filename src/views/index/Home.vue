@@ -62,7 +62,7 @@ import { ref } from 'vue';
 import { onMounted } from 'vue';
 
 import { getUserInfo } from '@/api/mock/index';
-// import { getList } from '@/api/watch/index';
+import { getList } from '@/api/watch/index';
 import HelloWorld from '@/components/HelloWorld.vue';
 import Welcome from '@/components/Welcome.vue';
 
@@ -104,13 +104,13 @@ onMounted(() => {
 });
 
 const getInfo = async () => {
-  // const res = await getList({ page: currentPage.value });
-  // if (res && res.result == '0' && res.list.length > 0) {
-  //   // 总阅读量
-  //   allReadCount.value = Number(res.video_total || 0);
-  //   readBuyList.value = res.list;
-  //   console.log(readBuyList);
-  // }
+  const res = await getList({ page: currentPage.value });
+  if (res && res.result == '0' && res.list.length > 0) {
+    // 总阅读量
+    allReadCount.value = Number(res.video_total || 0);
+    readBuyList.value = res.list;
+    console.log(readBuyList);
+  }
 };
 
 // 2.emit

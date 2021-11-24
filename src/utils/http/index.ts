@@ -4,7 +4,7 @@ import { ContentTypeEnum, HttpRequestHooks } from './axios/types';
 import { handleError } from './handleError';
 
 async function onBeforeRequest(config) {
-  config.headers['x-token'] = '8de470721618450d8cee6f7fee7076cf';
+  config.headers['x-token'] = '1518f371082f4846bc3037813fa0f13e';
   return config;
 }
 

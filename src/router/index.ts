@@ -1,24 +1,19 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { App } from 'vue';
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 
-import Home from '../views/index/Home.vue';
+import { DemoRoutes } from './modules/demo';
+import { AppRouteRecordRaw } from './types';
 
+const routeList: Array<AppRouteRecordRaw> = [...DemoRoutes];
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/',
-      name: 'Home',
-      component: Home,
-    },
-    {
-      path: '/sdkPage',
-      name: 'sdkPage',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/sdk/index.vue'),
-    },
-  ],
+  history: createWebHistory(),
+  routes: routeList as unknown as RouteRecordRaw[],
 });
+
+export function setupRouter(app: App<Element>) {
+  app.use(router);
+}
 
 export default router;
