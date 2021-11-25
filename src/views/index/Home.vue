@@ -50,6 +50,8 @@
   <HelloWorld ref="hwEL" msg="123123" @clickFun="onHw"></HelloWorld>
   <div @click="tapHwExposeFn">触发helloword中外抛的方法</div>
   <Welcome></Welcome>
+  <div>value:{{ collapsed }}</div>
+  <div @click="changeVuexVal">改变样式</div>
 </template>
 <script setup lang="ts">
 // swiper-bundle.min.css 决定了小圆点和左右翻页标签，如果不需要可以不引用
@@ -58,13 +60,15 @@ import 'swiper/swiper-bundle.min.css';
 import 'swiper/swiper.scss';
 
 import Swiper, { Autoplay, EffectCoverflow, EffectCube, Navigation, Pagination } from 'swiper';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { onMounted } from 'vue';
+import { useStore } from 'vuex';
 
 import { getUserInfo } from '@/api/mock/index';
 import { getList } from '@/api/watch/index';
 import HelloWorld from '@/components/HelloWorld.vue';
 import Welcome from '@/components/Welcome.vue';
+import { AppActionTypes } from '@/store/modules/app/action-types';
 
 import { VideoInfo } from './types/index';
 Swiper.use([Autoplay, EffectCoverflow, EffectCube, Pagination, Navigation]);
@@ -74,8 +78,18 @@ let readBuyList = ref<VideoInfo[]>([]);
 let currentPage = ref<number>(1);
 
 // 1:读取vite define中定义的全局变量
-console.log(process.env.APP_IS_LOCAL);
-console.log(qcccc);
+// console.log(process.env.APP_IS_LOCAL);
+// console.log(qcccc);
+
+// vuex使用
+const store = useStore();
+const collapsed = computed(() => {
+  return store.state.app.pageLoading;
+});
+console.log(collapsed);
+const changeVuexVal = () => {
+  store.commit(`app/${AppActionTypes.SET_PAGE_LOADING}`, !collapsed.value);
+};
 
 onMounted(() => {
   new Swiper('.swiper1', {

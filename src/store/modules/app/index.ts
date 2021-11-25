@@ -7,7 +7,7 @@ import { Getters, getters } from './getters';
 import { Mutations, mutations } from './mutations';
 import type { State } from './state';
 import { state } from './state';
-export { State };
+export type { State };
 
 export type AppStore<S = State> = Omit<VuexStore<S>, 'getters' | 'commit' | 'dispatch'> & {
   commit<K extends keyof Mutations, P extends Parameters<Mutations[K]>[1]>(
