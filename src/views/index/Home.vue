@@ -52,6 +52,11 @@
   <Welcome></Welcome>
   <div>value:{{ collapsed }}</div>
   <div @click="changeVuexVal">改变样式</div>
+  <p>--------------</p>
+  <div>{{ name }}</div>
+  <div @click="changeToRefsVal()">改变toRefs的值</div>
+  <p>--------------</p>
+  <div v-for="item in testRawArr" :key="item">{{ item }}</div>
 </template>
 <script setup lang="ts">
 // swiper-bundle.min.css 决定了小圆点和左右翻页标签，如果不需要可以不引用
@@ -60,7 +65,7 @@ import 'swiper/swiper-bundle.min.css';
 import 'swiper/swiper.scss';
 
 import Swiper, { Autoplay, EffectCoverflow, EffectCube, Navigation, Pagination } from 'swiper';
-import { computed, ref } from 'vue';
+import { computed, ref, toRaw, toRef } from 'vue';
 import { onMounted } from 'vue';
 import { useStore } from 'vuex';
 
@@ -78,15 +83,15 @@ let readBuyList = ref<VideoInfo[]>([]);
 let currentPage = ref<number>(1);
 
 // 1:读取vite define中定义的全局变量
-// console.log(process.env.APP_IS_LOCAL);
-// console.log(qcccc);
+// // console.log(process.env.APP_IS_LOCAL);
+// // console.log(qcccc);
 
 // vuex使用
 const store = useStore();
 const collapsed = computed(() => {
   return store.state.app.pageLoading;
 });
-console.log(collapsed);
+// console.log(collapsed);
 const changeVuexVal = () => {
   store.commit(`app/${AppActionTypes.SET_PAGE_LOADING}`, !collapsed.value);
 };
@@ -108,7 +113,7 @@ onMounted(() => {
     },
     on: {
       navigationShow: function () {
-        console.log('按钮显示了');
+        // console.log('按钮显示了');
       },
     },
   });
@@ -123,23 +128,44 @@ const getInfo = async () => {
     // 总阅读量
     allReadCount.value = Number(res.video_total || 0);
     readBuyList.value = res.list;
-    console.log(readBuyList);
+    // console.log(readBuyList);
   }
 };
 
 // 2.emit
 const onHw = (e) => {
-  console.log(e);
+  // console.log(e);
 };
 // 3：触发子组件expose外抛得方法
 let hwEL = ref<Element>();
 const tapHwExposeFn = () => {
-  console.log(hwEL.value.exposeHwFn());
+  // console.log(hwEL.value.exposeHwFn());
 };
 const getUserInfos = async () => {
   const res = await getUserInfo();
-  console.log(res);
+  // console.log(res);
 };
+// 4：使用toRef 只会影响原数据，并不会对ui界面造成影响因为原数据是非响应式的数据
+let bqcObj = {
+  name: 'bqc',
+  age: 123,
+  gender: 'man',
+};
+let name = toRef(bqcObj, 'name');
+console.log(name);
+const changeToRefsVal = () => {
+  const count = Math.random();
+  name.value = name.value + count;
+  console.log(name.value);
+  console.log(bqcObj);
+};
+// 5：toRaw
+const val = ['a', 'b', 'c'];
+let testRawArr = ref<string[]>(val);
+let test2RawArr = toRaw(testRawArr);
+// test2RawArr = ['d'];
+console.log(test2RawArr);
+console.log(toRaw(testRawArr.value[2]));
 </script>
 
 <style lang="scss">
