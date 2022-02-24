@@ -14,7 +14,7 @@ const { status, data, send, close, open } = useWebSocket(state.server, {
   autoReconnect: false,
   heartbeat: true,
 });
-console.log(status, data, send, close, open);
+console.log(status.value, data.value, send, close, open);
 watchEffect(() => {
   if (data.value) {
     try {
@@ -30,7 +30,10 @@ watchEffect(() => {
     }
   }
 });
-const getIsOpen = computed(() => status.value == 'OPEN');
+const getIsOpen = computed(() => {
+  console.log('getIsOpen:', status.value);
+  return status.value == 'OPEN';
+});
 // const getTagColor = computed(() => (getIsOpen.value ? 'success' : 'red'));
 // const getList = computed(() => {
 //   return [...state.recordList].reverse();
@@ -40,6 +43,8 @@ const getIsOpen = computed(() => status.value == 'OPEN');
 //   state.sendValue = '';
 // }
 function toggle() {
+  console.log(data.value);
+  console.log(status.value);
   console.log(getIsOpen.value);
   if (getIsOpen.value) {
     close();
