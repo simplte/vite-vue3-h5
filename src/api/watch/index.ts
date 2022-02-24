@@ -1,14 +1,14 @@
 import http from '@/utils/http/index';
-enum API {
-  getList = `/_new_cms/api/watch/videoList`,
-}
-interface VideoList {
-  page: number;
+
+enum WatchAPI {
+  getList = '/api/v1/getList',
 }
 
-export async function getList(data: VideoList): Promise<any> {
-  return http.post({
-    url: API.getList,
-    data,
+/**
+ * 边看边买数据
+ */
+export async function getList(): Promise<any> {
+  return http.get({
+    url: WatchAPI.getList,
   });
 }

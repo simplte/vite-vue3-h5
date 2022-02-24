@@ -9,11 +9,8 @@ module.exports = {
     'prettier',
     'plugin:prettier/recommended',
   ],
-  plugins: ['simple-import-sort'],
+  plugins: ['typescript', 'react', '@typescript-eslint', 'simple-import-sort', 'prettier'],
 
-  // 解析器
-  // eslint-plugin-vue 里的大多数规则都需要 vue-eslint-parser 来解析 template 的AST， 然而 babel-eslint 和 vue-eslint-parser 在解析上有冲突，解决办法是把 "parser": "babel-eslint", 移入到 parserOptions 内。
-  // 本项目需要对ts支持，所以需要@typescript-eslint/parser 来负责ts的语法检查
   parser: 'vue-eslint-parser',
   parserOptions: {
     ecmaVersion: 2020, // Allows for the parsing of modern ECMAScript features
