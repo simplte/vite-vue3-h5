@@ -48,7 +48,7 @@
     </div>
   </div>
   <HelloWorld ref="hwEL" msg="123123" @clickFun="onHw"></HelloWorld>
-  <div @click="tapHwExposeFn">触发helloword中外抛的方法</div>
+  <div class="emitHFun" @click="tapHwExposeFn">触发helloword中外抛的方法</div>
   <Welcome></Welcome>
   <div>value:{{ collapsed }}</div>
   <div @click="changeVuexVal">改变样式</div>
@@ -65,7 +65,7 @@ import 'swiper/swiper-bundle.min.css';
 import 'swiper/swiper.scss';
 
 import Swiper, { Autoplay, EffectCoverflow, EffectCube, Navigation, Pagination } from 'swiper';
-import { computed, ref, toRaw, toRef } from 'vue';
+import { computed, reactive, ref, toRaw, toRef } from 'vue';
 import { onMounted } from 'vue';
 import { useStore } from 'vuex';
 
@@ -81,6 +81,14 @@ Swiper.use([Autoplay, EffectCoverflow, EffectCube, Pagination, Navigation]);
 let allReadCount = ref<number>(0);
 let readBuyList = ref<VideoInfo[]>([]);
 let currentPage = ref<number>(1);
+const emitClass = reactive({
+  width: '100%',
+  height: '100px',
+  background: '#e4393c',
+  color: '#fff',
+  fontSize: '18px',
+  lineHeight: '100px',
+});
 
 // 1:读取vite define中定义的全局变量
 // // console.log(process.env.APP_IS_LOCAL);
@@ -169,6 +177,16 @@ console.log(toRaw(testRawArr.value[2]));
 </script>
 
 <style lang="scss">
+// 在scss中使用 js定义的变量
+.emitHFun {
+  width: v-bind('emitClass.width');
+  height: v-bind('emitClass.height');
+  font-size: v-bind('emitClass.fontSize');
+  line-height: v-bind('emitClass.lineHeight');
+  color: v-bind('emitClass.color');
+  background: v-bind('emitClass.background');
+}
+
 .title {
   position: relative;
   width: 200px;
