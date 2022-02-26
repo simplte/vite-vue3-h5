@@ -8,7 +8,7 @@ export const DemoRoutes: AppRouteRecordRaw[] = [
   {
     path: '/',
     name: 'Home',
-    component: () => import('../../views/index/Home.vue'),
+    component: () => import('../../views/index/index.vue'),
   },
   {
     path: '/sdkPage',

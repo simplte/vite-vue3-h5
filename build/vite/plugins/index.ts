@@ -1,6 +1,6 @@
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
-import type { Plugin } from 'vite'
+import type { Plugin } from 'vite';
 
 import { configMockPlugin } from './mock';
 
@@ -10,7 +10,7 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
     vue(),
     // 必须
     vueJsx(),
-    configMockPlugin(isBuild)
-  ]
+    configMockPlugin(isBuild),
+  ];
   return vitePlugins;
 }
