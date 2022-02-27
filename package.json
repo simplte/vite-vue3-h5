@@ -14,7 +14,8 @@
     "lint:eslint": "eslint --cache --max-warnings 0  \"{src,mock}/**/*.{vue,ts,tsx}\" --fix",
     "lint:prettier": "prettier --write --loglevel warn \"src/**/*.{js,json,tsx,css,less,scss,vue,html,md}\"",
     "lint:stylelint": "stylelint --cache --fix \"**/*.{vue,less,postcss,css,scss}\" --cache --cache-location node_modules/.cache/stylelint/",
-    "lint-staged": "lint-staged -c ./.husky/.lintstagedrc.js"
+    "lint-staged": "lint-staged -c ./.husky/.lintstagedrc.js",
+    "commit": "npx run git cz"
   },
   "dependencies": {
     "@vueuse/core": "^7.1.2",

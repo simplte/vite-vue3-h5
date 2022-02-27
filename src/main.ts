@@ -1,5 +1,6 @@
 import './utils/rem';
 import './assets/less/base.less';
+import 'vant/lib/index.css';
 
 import { createApp } from 'vue';
 

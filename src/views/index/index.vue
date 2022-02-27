@@ -6,7 +6,7 @@
 <script setup lang="ts">
 import { Button } from 'vant';
 </script>
-<style>
+<style lang="less">
 .sdk_page {
   background-color: red;
 }
