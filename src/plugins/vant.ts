@@ -1,4 +1,20 @@
-import { Button, Cell, CellGroup, List } from 'vant';
+import {
+  Button,
+  Card,
+  Cell,
+  CellGroup,
+  Grid,
+  GridItem,
+  Image as VanImage,
+  List,
+  NavBar,
+  NoticeBar,
+  Skeleton,
+  Swipe,
+  SwipeItem,
+  Tabbar,
+  TabbarItem,
+} from 'vant';
 import { App } from 'vue';
 
 export function setupVantComp(app: App<Element>) {
@@ -6,4 +22,15 @@ export function setupVantComp(app: App<Element>) {
   app.use(List);
   app.use(Cell);
   app.use(CellGroup);
+  app.use(Swipe);
+  app.use(SwipeItem);
+  app.use(NoticeBar);
+  app.use(Skeleton);
+  app.use(NavBar);
+  app.use(Tabbar);
+  app.use(TabbarItem);
+  app.use(Grid);
+  app.use(Card);
+  app.use(GridItem);
+  app.use(VanImage);
 }
