@@ -33,6 +33,11 @@
 
 <script setup lang="ts">
 import { onMounted, ref, watchEffect } from 'vue';
+
+import { LinbuduLiteralType } from '@/utils/Learnts';
+const Case = new LinbuduLiteralType();
+console.log(Case.value.endsWith('u'));
+
 let loading = ref<boolean>(true);
 let active = ref<number>(0);
 onMounted(() => {
