@@ -73,3 +73,53 @@ type NonNullable<T> = T extends null | undefined ? never : T;
 type Concurrence<A, B> = A | B;
 // 补集： 满足  B 属于 A  得到 A中有 B没有的部分
 type Complement<A, B extends A> = Exclude<A, B>;
+
+// 定义对象类型
+type PlainObjectType = Record<string, any>;
+// 交集
+type Intersection<A, B> = A extends B ? A : never;
+// 差集
+type Difference<A, B> = A extends B ? never : A;
+// 对象key得交集 -- 形成key的类型集合
+type ObjectKeysInterSection<T extends PlainObjectType, U extends PlainObjectType> = Intersection<
+  keyof T,
+  keyof U
+> &
+  Intersection<keyof U, keyof T>;
+interface AG {
+  a?: number;
+  b: number;
+  c: string;
+}
+interface BG {
+  a: number;
+  b: number;
+  d: string;
+}
+type ABK = ObjectKeysInterSection<AG, BG>;
+const abv: ABK = 'a';
+
+// 对象key的差集 -- 形成key的类型集合
+type ObjectKeysDiffence<T extends PlainObjectType, U extends PlainObjectType> = Difference<
+  keyof T,
+  keyof U
+>;
+
+type PA = Pick<AG, 'a'>;
+// 选出属性交集 -- 形成新的类型
+type ObjectIntersection<T extends PlainObjectType, U extends PlainObjectType> = Pick<
+  T,
+  ObjectKeysInterSection<T, U>
+>;
+// 选出属性的差集 -- 形成新的类型
+type ObjectDifference<T extends PlainObjectType, U extends PlainObjectType> = Pick<
+  T,
+  ObjectKeysDiffence<T, U>
+>;
+
+// 合并两个类型  形成新的类型 merge
+type Merge<T extends PlainObjectType, U extends PlainObjectType> = ObjectKeysInterSection<T, U> &
+  ObjectKeysDiffence<T, U> &
+  ObjectKeysDiffence<U, T>;
+
+// tips 普通集合交集使用的是 | ，但对象的交集使用的是交叉类型 &
