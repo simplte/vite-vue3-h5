@@ -123,3 +123,9 @@ type Merge<T extends PlainObjectType, U extends PlainObjectType> = ObjectKeysInt
   ObjectKeysDiffence<U, T>;
 
 // tips 普通集合交集使用的是 | ，但对象的交集使用的是交叉类型 &
+
+type Pick<T, U extends keyof T> = {
+  [P in U]: T[P];
+};
+
+type Omit<T, U extends keyof any> = Pick<T, Exclude<keyof T, U>>;
