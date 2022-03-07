@@ -42,12 +42,13 @@
         >
           <template #default="scope">
             <div class="item">
-              <div v-if="scope.item.no === 1">
+              {{ scope }}
+              <!-- <div v-if="scope.item.no === 1">
                 代码中是有2000条的数据的，但是我们在渲染的时候刚好满足可视窗口高度的列表，因为代码中为了显示特别一点，还特意加了一个独特的高度的，所以在滚动的时候无法精确到每次都有一定的条数。`item-height-getter`可以通过这个来添加个别`Item`特别的高度。`default-item-height`这个可以设置item默认的高度，在没有设置`item-height-getter`情况下，就可以固定每次显示多少条，因为高度都是一样的，可视窗口就那么宽。有兴趣的朋友可以自己去试一下，这里就不做展示了。
               </div>
               <div v-else :style="{ color: scope.item.color }">
                 NO: {{ scope.item.no }}, height: {{ scope.height }}px, offset: {{ scope.offset }}px
-              </div>
+              </div> -->
             </div>
           </template>
         </Scroll>

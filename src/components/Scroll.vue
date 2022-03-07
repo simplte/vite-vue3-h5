@@ -10,9 +10,11 @@
       overflow: auto;
       border: none;
     "
+    class="wrapperList"
     @scroll="refreshView()"
   >
     <div
+      class="wrapperBox"
       :style="{ height: listTotalHeight + 'px' }"
       style="width: 100%; padding: 0; margin: 0"
     ></div>
@@ -20,7 +22,12 @@
       ref="itemWrapper"
       style="position: absolute; top: 0; left: 0; width: 100%; padding: 0; margin: 0"
     >
-      <div v-for="d in listViewWithInfo" :key="d.index" :style="{ 'min-height': d.height + 'px' }">
+      <div
+        v-for="d in listViewWithInfo"
+        :key="d.index"
+        class="slotBox"
+        :style="{ 'min-height': d.height + 'px' }"
+      >
         <slot :item="d.item" :height="d.height" :offset="d.offset" :index="d.index"></slot>
       </div>
     </div>
@@ -42,7 +49,7 @@ let _viewHeight: number | undefined = undefined;
 let wrapper = ref<HTMLElement>();
 let itemWrapper = ref<HTMLElement>();
 let listViewWithInfo = computed(() => {
-  return listView.value.map((item, viewIndex) => {
+  const value = listView.value.map((item, viewIndex) => {
     const index = topItemIndex.value + viewIndex;
     const { height, offset } = getItemInfo(index);
     return {
@@ -52,6 +59,7 @@ let listViewWithInfo = computed(() => {
       offset,
     };
   });
+  return value;
 });
 watch(
   () => {
@@ -90,7 +98,7 @@ const getItemInfo = (index) => {
 const refreshView = (config?) => {
   if (config) {
     if (config?.resize) {
-      _viewHeight = wrapper?.value?.clientHeight;
+      _viewHeight = wrapper.value?.clientHeight;
     }
     if (config?.clearCache) {
       itemOffsetCache.value = [];
@@ -107,7 +115,7 @@ const refreshView = (config?) => {
       (props.list.length - itemOffsetCache.value.length) * props.defaultItemHeight
     : getItemInfo(props.list.length - 1).offset;
   listTotalHeight.value = _listTotalHeight;
-  console.log(listTotalHeight.value);
+  console.log(listView.value);
   itemWrapper.value.style.transform = `translateY(${getItemInfo(topItemIndex.value - 1).offset}px)`; // 控制translateY使可视列表位置保持在可视窗口 ;
   emits('scroll', {
     topItemIndex: topItemIndex.value,
