@@ -15,6 +15,6 @@
 </script>
 
 <template>
-  <van-nav-bar title="vue3DemoIndex" />
+  <!-- <van-nav-bar title="vue3DemoIndex" /> -->
   <router-view />
 </template>

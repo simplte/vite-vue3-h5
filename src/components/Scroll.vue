@@ -99,6 +99,7 @@ const refreshView = (config?) => {
   if (config) {
     if (config?.resize) {
       _viewHeight = wrapper.value?.clientHeight;
+      console.log(wrapper.value);
     }
     if (config?.clearCache) {
       itemOffsetCache.value = [];
@@ -108,6 +109,7 @@ const refreshView = (config?) => {
   const viewHeight = _viewHeight as number;
   const _topItemIndex = findItemIndexByOffset(scrollTop);
   const bottomItemIndex = findItemIndexByOffset(scrollTop + viewHeight);
+  console.log(bottomItemIndex);
   topItemIndex.value = _topItemIndex;
   listView.value = props.list.slice(topItemIndex.value, bottomItemIndex);
   const _listTotalHeight = props.defaultItemHeight
