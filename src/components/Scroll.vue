@@ -4,17 +4,15 @@
     style="
       position: relative;
       width: 100%;
-      height: 100%;
+      height: calc(100vh - 40px);
       padding: 0;
       margin: 0;
       overflow: auto;
       border: none;
     "
-    class="wrapperList"
     @scroll="refreshView()"
   >
     <div
-      class="wrapperBox"
       :style="{ height: listTotalHeight + 'px' }"
       style="width: 100%; padding: 0; margin: 0"
     ></div>
@@ -34,16 +32,16 @@
   </div>
 </template>
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 const props = defineProps<{
-  list: Array<any>;
+  list: [];
   itemHeightGetter: Function;
-  defaultItemHeight: Number;
+  defaultItemHeight: number;
 }>();
 const emits = defineEmits(['scroll']);
-let listView = ref<any[]>([]);
+let listView = ref([]);
 let listTotalHeight = ref<number>(0);
-let itemOffsetCache = ref<any[]>([]);
+let itemOffsetCache = ref([]);
 let topItemIndex = ref<number>(0);
 let _viewHeight: number | undefined = undefined;
 let wrapper = ref<HTMLElement>();
@@ -98,8 +96,7 @@ const getItemInfo = (index) => {
 const refreshView = (config?) => {
   if (config) {
     if (config?.resize) {
-      _viewHeight = wrapper.value?.clientHeight;
-      console.log(wrapper.value);
+      _viewHeight = (wrapper.value as HTMLElement).clientHeight;
     }
     if (config?.clearCache) {
       itemOffsetCache.value = [];
@@ -107,9 +104,9 @@ const refreshView = (config?) => {
   }
   const scrollTop = wrapper?.value?.scrollTop as number;
   const viewHeight = _viewHeight as number;
+  console.log(_viewHeight, scrollTop);
   const _topItemIndex = findItemIndexByOffset(scrollTop);
   const bottomItemIndex = findItemIndexByOffset(scrollTop + viewHeight);
-  console.log(bottomItemIndex);
   topItemIndex.value = _topItemIndex;
   listView.value = props.list.slice(topItemIndex.value, bottomItemIndex);
   const _listTotalHeight = props.defaultItemHeight
@@ -117,8 +114,9 @@ const refreshView = (config?) => {
       (props.list.length - itemOffsetCache.value.length) * props.defaultItemHeight
     : getItemInfo(props.list.length - 1).offset;
   listTotalHeight.value = _listTotalHeight;
-  console.log(listView.value);
-  itemWrapper.value.style.transform = `translateY(${getItemInfo(topItemIndex.value - 1).offset}px)`; // 控制translateY使可视列表位置保持在可视窗口 ;
+  (itemWrapper.value as HTMLElement).style.transform = `translateY(${
+    getItemInfo(topItemIndex.value - 1).offset
+  }px)`; // 控制translateY使可视列表位置保持在可视窗口 ;
   emits('scroll', {
     topItemIndex: topItemIndex.value,
     bottomItemIndex,
