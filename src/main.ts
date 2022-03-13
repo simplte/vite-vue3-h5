@@ -5,6 +5,7 @@ import 'vant/lib/index.css';
 import { createApp } from 'vue';
 
 import App from './App.vue';
+import { setupDirectives } from './directives';
 import { setupVantComp } from './plugins';
 import router, { setupRouter } from './router';
 import { setupStore } from './store';
@@ -13,6 +14,7 @@ const app = createApp(App);
 (window as any).global = window;
 
 function bootstrap(app) {
+  setupDirectives(app);
   setupVantComp(app);
   setupRouter(app);
   setupStore(app);
