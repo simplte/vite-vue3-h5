@@ -44,6 +44,13 @@ export class ImageManger {
         next && next();
       });
   }
+  update(src) {
+    const currentSrc = this.src;
+    if (src !== currentSrc) {
+      this.src = src;
+      this.state = State.loading;
+    }
+  }
 }
 export default function loadImage(src): Promise<void> {
   return new Promise((resolve, reject) => {
