@@ -1,4 +1,5 @@
 import { App } from 'vue';
+
 import Lazy from './lazy';
 const lazyLoadImgPlugin = {
   install(app: App<Element>, options) {
