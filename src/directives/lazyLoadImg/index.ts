@@ -1,7 +1,11 @@
 import { App } from 'vue';
+import Lazy from './lazy';
 const lazyLoadImgPlugin = {
   install(app: App<Element>, options) {
-    app.directive('lazy', {});
+    const lazy = new Lazy(options);
+    app.directive('lazy', {
+      mounted: lazy.add.bind(lazy),
+    });
   },
 };
 

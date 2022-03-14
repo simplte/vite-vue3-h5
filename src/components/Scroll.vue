@@ -63,7 +63,8 @@ watch(
   () => {
     return props.list;
   },
-  () => {
+  (val) => {
+    console.log(val);
     refreshView();
   }
 );
@@ -94,6 +95,8 @@ const getItemInfo = (index) => {
   return cache;
 };
 const refreshView = (config?) => {
+  console.log('重新渲染页面');
+  console.log(config);
   if (config) {
     if (config?.resize) {
       _viewHeight = (wrapper.value as HTMLElement).clientHeight;
@@ -104,7 +107,6 @@ const refreshView = (config?) => {
   }
   const scrollTop = wrapper?.value?.scrollTop as number;
   const viewHeight = _viewHeight as number;
-  console.log(_viewHeight, scrollTop);
   const _topItemIndex = findItemIndexByOffset(scrollTop);
   const bottomItemIndex = findItemIndexByOffset(scrollTop + viewHeight);
   topItemIndex.value = _topItemIndex;
