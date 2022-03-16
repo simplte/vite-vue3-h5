@@ -6,6 +6,7 @@ export default class Lazy {
   error: string;
   managerQueue: any[];
   observer: IntersectionObserver | null;
+  private cache;
   constructor(options) {
     this.managerQueue = [];
     this.observer = null;
@@ -13,6 +14,8 @@ export default class Lazy {
 
     this.loading = options.loading || DEFAULT_URL;
     this.error = options.error || DEFAULT_URL;
+
+    this.cache = new ImageCache({ maxSize: 3 });
   }
   add(el, binding) {
     const src = binding.value;
@@ -22,6 +25,7 @@ export default class Lazy {
       loading: this.loading,
       error: this.error,
       state: 0,
+      cache: this.cache,
     });
     this.managerQueue.push(manager);
     this.observer && this.observer.observe(el);
@@ -82,6 +86,30 @@ export default class Lazy {
     });
     if (manager) {
       manager.update(src);
+    } else {
+      this.add(el, binding);
     }
+  }
+}
+
+class ImageCache {
+  cacheList: Set<string>;
+  maxSize: number;
+  constructor(options) {
+    this.maxSize = options?.maxSize ?? 10;
+    this.cacheList = new Set();
+  }
+  has(key) {
+    return this.cacheList.has(key);
+  }
+  add(key) {
+    this.cacheList.add(key);
+    if (this.cacheList.size > this.maxSize) {
+      this.delete();
+    }
+  }
+  delete() {
+    const array = Array.from(this.cacheList);
+    this.cacheList.delete(array[0]);
   }
 }

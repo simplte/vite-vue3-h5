@@ -10,12 +10,14 @@ export class ImageManger {
   state: number;
   loading: string;
   error: string;
+  cache;
   constructor(options) {
     this.el = options.el;
     this.src = options.src;
     this.state = options.state;
     this.loading = options.loading;
     this.error = options.error;
+    this.cache = options.cache;
 
     this.render(this.loading);
   }
@@ -28,6 +30,11 @@ export class ImageManger {
     if (this.state > State.loading) {
       return;
     }
+    if (this.cache.has(this.src)) {
+      this.state = State.loaded;
+      this.render(this.src);
+      return;
+    }
     this.renderSrc(next);
   }
   renderSrc(next) {
@@ -35,6 +42,7 @@ export class ImageManger {
       .then(() => {
         this.state = State.loaded;
         this.render(this.src);
+        this.cache.add(this.src);
         next && next();
       })
       .catch((error) => {
