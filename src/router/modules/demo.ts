@@ -26,4 +26,9 @@ export const DemoRoutes: AppRouteRecordRaw[] = [
     // which is lazy-loaded when the route is visited.
     component: () => import('../../views/webSocket/index.vue'),
   },
+  {
+    path: '/animation',
+    name: 'animation',
+    component: () => import('../../views/animation/index.vue'),
+  },
 ];
