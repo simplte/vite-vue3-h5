@@ -3,6 +3,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import type { Plugin } from 'vite';
 
 import { configMockPlugin } from './mock';
+import { configSvgIconsPlugin } from './svgSprite';
 
 export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   const vitePlugins: (Plugin | Plugin[])[] = [
@@ -11,6 +12,7 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
     // 必须
     vueJsx(),
     configMockPlugin(isBuild),
+    configSvgIconsPlugin(isBuild),
   ];
   return vitePlugins;
 }
