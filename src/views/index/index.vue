@@ -1,6 +1,8 @@
 <template>
   <div class="m-container">
-    <div class="m-header">我是头部</div>
+    <div class="m-header">
+      <SvgIcon name="moon" class="svg-icon"></SvgIcon>
+    </div>
     <div class="m-list">
       <div class="m-list-container">
         <Scroll
@@ -35,6 +37,7 @@
 import { ref } from 'vue';
 
 import Scroll from '@/components/Scroll.vue';
+import SvgIcon from '@/components/SvgIcon.vue';
 type ListInfo = {
   no: number;
   color: string;
@@ -137,5 +140,10 @@ getData().then((d) => {
     width: 50px;
     height: 50px;
   }
+}
+
+.svg-icon {
+  width: 30px;
+  height: 30px;
 }
 </style>

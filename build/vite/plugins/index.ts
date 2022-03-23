@@ -12,7 +12,8 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
     // 必须
     vueJsx(),
     configMockPlugin(isBuild),
-    configSvgIconsPlugin(isBuild),
   ];
+  // svg-icon
+  vitePlugins.push(configSvgIconsPlugin(isBuild));
   return vitePlugins;
 }
