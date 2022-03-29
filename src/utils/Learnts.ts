@@ -129,3 +129,47 @@ type Pick<T, U extends keyof T> = {
 };
 
 type Omit<T, U extends keyof any> = Pick<T, Exclude<keyof T, U>>;
+
+const user = { name: 'amy', age: 18 };
+type UserType = typeof user;
+
+function getPersonInfo<T extends keyof UserType>(key: T): UserType[T] {
+  return user[key];
+}
+
+const userName = getPersonInfo('name'); // string
+
+// 4: 使用 infer 解析url参数为对象类型
+type UrlParse<T extends string> = T extends `${infer Key}=${infer Value}&${infer Nextkey}`
+  ? { [k in Key]: Value & UrlParse<Nextkey> }
+  : T extends `${infer Key2}=${infer Value2}`
+  ? { [k in Key2]: Value2 }
+  : null;
+
+type U1 = UrlParse<'a=2'>;
+
+// 根据interface类型来定义 函数格式的对象
+type Getters<T> = {
+  [K in keyof T as `get${Capitalize<string & K>}`]: () => T[K];
+};
+interface Person {
+  name: string;
+  age: number;
+}
+
+type PersonGetters = Getters<Person>;
+const personCase: PersonGetters = {
+  getName: () => {
+    return '22';
+  },
+  getAge: () => {
+    return 22;
+  },
+};
+console.log(personCase);
+// 最新的ts中 结构出的变量如果前面有_  则会认为 这解构变量标记是未使用的 只会报 second 没有被使用。
+// 不知道为什么我本地没有用
+function getValues() {
+  return ['a', 'b'];
+}
+const [_first, second] = getValues();
