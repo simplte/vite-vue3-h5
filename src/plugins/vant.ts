@@ -3,6 +3,7 @@ import {
   Card,
   Cell,
   CellGroup,
+  Field,
   Grid,
   GridItem,
   Image as VanImage,
@@ -12,6 +13,7 @@ import {
   Skeleton,
   Swipe,
   SwipeItem,
+  Switch,
   Tabbar,
   TabbarItem,
 } from 'vant';
@@ -33,4 +35,6 @@ export function setupVantComp(app: App<Element>) {
   app.use(Card);
   app.use(GridItem);
   app.use(VanImage);
+  app.use(Switch);
+  app.use(Field);
 }
