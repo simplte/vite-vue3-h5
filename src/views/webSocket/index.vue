@@ -10,8 +10,8 @@
   <div>
     <p>消息列表:</p>
     <p v-for="(item, index) in getList" :key="index" class="msg-box">
-      <span>{{ item.id }}</span>
-      <span>{{ item.res }}</span>
+      <span class="user-name">{{ item.id }} 说</span>
+      <span class="user-msg">{{ item.res }}</span>
     </p>
   </div>
 </template>
@@ -32,6 +32,10 @@ const { status, data, send, close, open } = useWebSocket(state.server, {
     interval: 5000,
   },
 });
+const adminLogin = () => {
+  send(JSON.stringify({ id: 'admin', userName: '管理员', isLogged: true }));
+};
+adminLogin();
 let msgVal = ref<string>('');
 // 监听socket得返回值
 watchEffect(() => {
@@ -39,6 +43,10 @@ watchEffect(() => {
     try {
       console.log(data.value);
       const res = JSON.parse(data.value);
+      if (res.id == 'admin') {
+        console.log(res.res);
+        return;
+      }
       state.recordList.push(res);
     } catch (error) {
       state.recordList.push({
@@ -60,9 +68,9 @@ const getList = computed(() => {
 });
 // 新增socket  用户上线功能
 function handlerSend() {
-  send(JSON.stringify({ id: 'xh', msg: 'xh' }));
-  send(JSON.stringify({ id: 'xl', msg: 'xl' }));
-  send(JSON.stringify({ id: 'dh', msg: 'dh' }));
+  send(JSON.stringify({ id: 'xh', msg: 'xh', userName: '小红', isLogged: true }));
+  send(JSON.stringify({ id: 'xl', msg: 'xl', userName: '小绿', isLogged: true }));
+  send(JSON.stringify({ id: 'dh', msg: 'dh', userName: '大黄', isLogged: true }));
 }
 function sendMsg(user) {
   send(JSON.stringify({ id: user, msg: msgVal.value }));
@@ -79,8 +87,26 @@ function toggle() {
 }
 </script>
 
-<style>
+<style lang="scss">
 .msg-box {
   display: flex;
+  margin-bottom: 8px;
+
+  .user-name {
+    width: 100px;
+    margin-right: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+  }
+
+  .user-msg {
+    padding: 0 18px;
+    background-color: greenyellow;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+  }
 }
 </style>
