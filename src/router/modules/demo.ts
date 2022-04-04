@@ -19,6 +19,14 @@ export const DemoRoutes: AppRouteRecordRaw[] = [
     component: () => import('../../views/sdk/index.vue'),
   },
   {
+    path: '/canvas',
+    name: 'canvas',
+    // route level code-splitting
+    // this generates a separate chunk (About.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../../views/sdk/canvas.vue'),
+  },
+  {
     path: '/webSocket',
     name: 'webSocket',
     // route level code-splitting
