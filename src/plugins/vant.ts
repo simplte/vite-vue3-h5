@@ -3,6 +3,7 @@ import {
   Card,
   Cell,
   CellGroup,
+  Dialog,
   Field,
   Grid,
   GridItem,
@@ -37,4 +38,5 @@ export function setupVantComp(app: App<Element>) {
   app.use(VanImage);
   app.use(Switch);
   app.use(Field);
+  app.use(Dialog);
 }

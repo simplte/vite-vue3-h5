@@ -21,6 +21,7 @@ ws.createServer((socket) => {
         JSON.stringify({
           id: 'admin',
           res: '请先上线后发言',
+          time: new Date().getTime(),
         })
       );
       return;
@@ -31,6 +32,7 @@ ws.createServer((socket) => {
         JSON.stringify({
           id: data.id,
           res: data.msg,
+          userName: data.userName,
           time: new Date().getTime(),
         })
       );
