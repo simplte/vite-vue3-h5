@@ -3,6 +3,7 @@ import './assets/less/base.less';
 import 'vant/lib/index.css';
 // Register icon sprite
 import 'virtual:svg-icons-register';
+import './utils/tracker/index';
 
 import { createApp } from 'vue';
 
