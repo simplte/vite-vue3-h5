@@ -88,10 +88,16 @@ function toggle() {
     err();
   } else {
     open();
+    errReject();
   }
 }
 function err() {
   throw new Error('出错');
+}
+function errReject() {
+  return new Promise((resolve, reject) => {
+    throw new Error();
+  });
 }
 </script>
 
