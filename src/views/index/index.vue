@@ -51,7 +51,7 @@ const itemHeightGetter = (item) => {
   //   return 27;
   // }
   // return 20 + (item.no % 10);
-  return 50;
+  return 80;
 };
 const defaultItemHeight = ref<number>(30);
 const defaultImgUrl = [
@@ -84,7 +84,7 @@ const getData = (): Promise<ListInfo[]> => {
         new Array(200).fill(0).map((i, index) => {
           return {
             no: baseIndex + index,
-            color: ['#33d', '#3d3', '#d33', '#333'][(Math.random() * 4) | 0],
+            color: ['#fff', 'yellow', 'green', 'blue'][(Math.random() * 4) | 0],
             img: defaultImgUrl[(Math.random() * 8) | 0],
           };
         })
@@ -117,6 +117,10 @@ getData().then((d) => {
       position: absolute;
       width: 100%;
       height: 100%;
+      height: 100vh;
+      color: white;
+      background: radial-gradient(circle at 60% 90%, rgba(46, 103, 161, 1), transparent 60%),
+        radial-gradient(circle at 20px 20px, rgba(46, 103, 161, 0.8), transparent 25%), #182336;
 
       .item {
         display: flex;
@@ -128,8 +132,22 @@ getData().then((d) => {
 }
 
 .detail-content {
+  z-index: 10;
   display: flex;
   align-items: center;
+  width: 100%;
+  padding: 0 15px;
+  margin-bottom: 30px;
+  font-family: sans-serif;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  background: linear-gradient(to top right, rgba(90, 149, 207, 0.5), rgba(58, 76, 99, 0.8));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  border-left: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+  box-shadow: 10px -10px 20px rgba(0, 0, 0, 0.2), -10px 10px 20px rgba(255, 255, 255, 0.1);
+  transform: rotate(-15deg);
+  backdrop-filter: blur(6px); /*  元素后面区域添加模糊效果 */
 
   .intros {
     flex: 1;
