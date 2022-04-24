@@ -16,7 +16,7 @@
     "lint:stylelint": "stylelint --cache --fix \"**/*.{vue,less,postcss,css,scss}\" --cache --cache-location node_modules/.cache/stylelint/",
     "lint-staged": "lint-staged -c ./.husky/.lintstagedrc.js",
     "commit": "git cz",
-    "dirs": "node ./readDir.js"
+    "dirs": "node ./readDir/readDir.js"
   },
   "dependencies": {
     "@vueuse/core": "^7.1.2",
@@ -47,6 +47,7 @@
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "eslint-plugin-typescript": "^0.14.0",
     "eslint-plugin-vue": "^8.0.3",
+    "fs-extra": "^10.1.0",
     "husky": "^7.0.4",
     "less": "^4.1.2",
     "less-loader": "^10.2.0",
