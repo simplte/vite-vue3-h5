@@ -8,3 +8,8 @@
 5:git-cz    todo
 6:axios     doing
 ```
+- 服务时引入一个静态资源会返回解析后的公共路径
+```
+import imgUrl from './img.png'
+document.getElementById('hero-img').src = imgUrl
+```

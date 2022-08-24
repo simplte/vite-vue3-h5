@@ -2,6 +2,7 @@
   <div class="m-container">
     <div class="m-header">
       <SvgIcon name="moon" class="svg-icon"></SvgIcon>
+      <img :src="imgUrl" alt="" />
     </div>
     <div class="m-list">
       <div class="m-list-container">
@@ -36,6 +37,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
+import add from '@/assets/images/add.png';
 import Scroll from '@/components/Scroll.vue';
 import SvgIcon from '@/components/SvgIcon.vue';
 type ListInfo = {
@@ -43,7 +45,8 @@ type ListInfo = {
   color: string;
   img: string;
 };
-
+// 将资源引入为 URL 服务时引入一个静态资源会返回解析后的公共路径
+const imgUrl = ref(add);
 const list = ref<any[]>([]);
 const page = ref<number>(0);
 const itemHeightGetter = (item) => {
