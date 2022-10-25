@@ -18,9 +18,14 @@ jobs:
           yarn build:test
           cp dist/index.html dist/404.html
 
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@releases/v3
-        with:
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          branch: master
-          folder: dist
+      # - name: Deploy 🚀
+      #   uses: JamesIves/github-pages-deploy-action@releases/v3
+      #   with:
+      #     GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+      #     branch: master
+      #     folder: dist
+      - name: 上传docker
+        run: |
+          echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+          docker build -t simplte/simplte-info:latest .
+          docker push simplte/simplte-info:latest
