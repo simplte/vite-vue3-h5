@@ -34,7 +34,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-        images: vite-vue3-h5
+          images: vite-vue3-h5
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
