@@ -1,7 +1,7 @@
 FROM nginx
 
-COPY ./dist/ /usr/share/nginx/html/
-COPY ./vhost.nginx.conf /etc/nginx/conf.d/pea3nut-info.conf
+COPY dist/ /usr/share/nginx/html/
+COPY ./vhost.nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 
