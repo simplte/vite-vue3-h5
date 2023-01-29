@@ -1,5 +1,5 @@
-import BasicLayout from '@/layout/BasicLayout.vue';
-import { createAsyncComponent } from '@/utils/tools/createAsyncComponent';
+// import BasicLayout from '@/layout/BasicLayout.vue';
+// import { createAsyncComponent } from '@/utils/tools/createAsyncComponent';
 
 import { AppRouteRecordRaw } from '../types';
 
@@ -38,5 +38,10 @@ export const DemoRoutes: AppRouteRecordRaw[] = [
     path: '/animation',
     name: 'animation',
     component: () => import('../../views/animation/index.vue'),
+  },
+  {
+    path: '/biji',
+    name: 'biji',
+    component: () => import('../../views/bJi/bJi.vue'),
   },
 ];
