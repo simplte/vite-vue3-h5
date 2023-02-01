@@ -1,9 +1,15 @@
 <template>
   <div class="sdk_page">123</div>
+  <div class="sdk_page">{{ FStore.count }}</div>
+  <div class="sdk_page">{{ count }}</div>
 </template>
 
 <script setup lang="ts">
+// store解构之后就不是响应式了，因此需要使用storeToRefs
+import { storeToRefs } from 'pinia';
 import { defineProps, nextTick, reactive, ref, watch, withDefaults } from 'vue';
+
+import { useFirstStore, useUserStore } from '@/piniaStore';
 const simplePerson = ref('张三');
 const person = ref({ name: '张三' });
 const complexPerson = ref({ name: '张三', info: { age: 18 } });
@@ -70,4 +76,38 @@ const props = withDefaults(defineProps<Props>(), {
   multiple: false,
 });
 console.log(props);
+
+// 3 pinia 用法
+const FStore = useFirstStore();
+console.log(FStore.count);
+const { count } = storeToRefs(FStore);
+// 修改state的几种方式
+
+// 方式一，直接修改
+FStore.count += 1;
+// 方式二，如果修改多个数据，可以使用$patch批量修改
+FStore.$patch({
+  count: FStore.count + 1,
+  arr: [...FStore.arr, 4],
+});
+// 方式三： $patch一个函数
+FStore.$patch((state) => {
+  state.count++;
+  state.arr.push(4);
+});
+// 方式四，调用actions
+FStore.changeCount(1);
+// 方式五，替换整个state
+FStore.$state = {
+  count: 2,
+  arr: [1, 2, 3, 4],
+};
+// 方式六：重置state
+
+FStore.$reset();
+
+// 使用getter
+console.log(FStore.doubleCount);
+
+const { userInfo } = useUserStore();
 </script>
